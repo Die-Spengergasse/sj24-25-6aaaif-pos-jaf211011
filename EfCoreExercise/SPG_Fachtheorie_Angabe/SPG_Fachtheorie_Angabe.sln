@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A5D7B35C-1F26-485F-B3DC-A8E6FD43A5AB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPG_Fachtheorie.Aufgabe1", "src\SPG_Fachtheorie.Aufgabe1\SPG_Fachtheorie.Aufgabe1.csproj", "{46F68F38-227F-43EE-B344-EB445701A9C9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{7F12C4F0-FF08-4693-B02B-E9224ADE396B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SPG_Fachtheorie.Aufgabe1.Test", "test\SPG_Fachtheorie.Aufgabe1.Test\SPG_Fachtheorie.Aufgabe1.Test.csproj", "{CBC2E0B9-7BCE-44C1-BDCC-86A27816F107}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{46F68F38-227F-43EE-B344-EB445701A9C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46F68F38-227F-43EE-B344-EB445701A9C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46F68F38-227F-43EE-B344-EB445701A9C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46F68F38-227F-43EE-B344-EB445701A9C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBC2E0B9-7BCE-44C1-BDCC-86A27816F107}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBC2E0B9-7BCE-44C1-BDCC-86A27816F107}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBC2E0B9-7BCE-44C1-BDCC-86A27816F107}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBC2E0B9-7BCE-44C1-BDCC-86A27816F107}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{46F68F38-227F-43EE-B344-EB445701A9C9} = {A5D7B35C-1F26-485F-B3DC-A8E6FD43A5AB}
+		{CBC2E0B9-7BCE-44C1-BDCC-86A27816F107} = {7F12C4F0-FF08-4693-B02B-E9224ADE396B}
+	EndGlobalSection
+EndGlobal

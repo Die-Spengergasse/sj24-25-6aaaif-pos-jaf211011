@@ -1,0 +1,85 @@
+@startuml
+enum RepairStatus {
+    Reported
+    PendingRepair
+    Repaired
+}
+
+class Roomnumber<<value object>> {
+    + Building : string
+    + Floor : string
+    + Number : int
+    ---
+    + Roomnumber(string building, string floor, int number)
+}
+
+entity Room {
+   + Roomnumber : Roomnumber
+   + Type : string
+   ---
+   + Room(Roomnumber roomnumber, string type)
+}
+note left of Room::Type
+  "classroom", "wc", ...
+end note
+
+Room -- Roomnumber
+
+entity Person {
+    + Firstname : string
+    + Lastname : string
+    + Accountname : string
+    ---
+    + Person(string firstname, string lastname, string accountname)
+}
+note left of Person::Accountname
+  unique
+end note
+
+
+entity Employee {
+    + Office : string
+    ---
+    + Employee(string firstname, string lastname, string accountname,
+    string office)
+}
+
+Employee -up-|> Person
+
+entity Damage {
+    + Room : Room
+    + Description : string
+    + Status : RepairStatus
+    ---
+    + Damage(Room room, string description)
+}
+
+Damage "1..n" -- "1" Room
+Damage -- RepairStatus
+
+entity DamageReport {
+    + Damage : Damage
+    + Reporter : Person
+    + DateTime : DateTime
+    ---
+    + DamageReport(Damage damage, Person reporter, DateTime dateTime)
+}
+
+DamageReport "1..n" -- "1"  Damage
+DamageReport "1..n" -- "1"  Person
+
+entity Repairation {
+    + Damage : Damage
+    + Repairer : Employee
+    + DateTime : DateTime
+    + Description : string
+    ---
+    + Repairation(Damage damage, Employee repairer, DateTime dateTime,
+    string description)
+}
+
+Repairation "1..n" -- "1"  Damage
+Repairation "1..n" -- "1"  Employee
+
+@enduml
+
