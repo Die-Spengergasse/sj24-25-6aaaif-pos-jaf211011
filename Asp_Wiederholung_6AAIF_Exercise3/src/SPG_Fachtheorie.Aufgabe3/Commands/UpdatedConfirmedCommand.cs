@@ -1,13 +1,9 @@
-﻿using SPG_Fachtheorie.Aufgabe1.Model;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace SPG_Fachtheorie.Aufgabe3.Commands
 {
-    //"cashDeskNumber": 1,
-    //"paymentDateTime": "2025-03-07T14:00:00",
-    //"paymentType": "Cash"|"Maestro"|"Creditcard",
-    //"employeeRegistrationNumber": 1001
-    public record NewPaymentCommand(
+    public record UpdatedConfirmedCommand
+    (
             [Range(1, 999999, ErrorMessage = "Invalid cash desk numbner")]
                 int CashDeskNumber,
                 DateTime PaymentDateTime,
@@ -19,8 +15,8 @@ namespace SPG_Fachtheorie.Aufgabe3.Commands
         ) : IValidatableObject
     {
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-            // Validate: Method called to validate the object
-            // ValidationContext: Provides context about the object being validated
+        // Validate: Method called to validate the object
+        // ValidationContext: Provides context about the object being validated
         {
             if (PaymentDateTime > DateTime.Now.AddMinutes(1))
             {
