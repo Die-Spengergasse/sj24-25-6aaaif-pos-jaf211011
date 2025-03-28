@@ -123,5 +123,32 @@ namespace SPG_Fachtheorie.Aufgabe3.Controllers
             }
             return NoContent();
         }
+
+        [HttpPost("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public IActionResult UpdatePaymentItem(int id, [FromForm] PaymentItemDto paymentItemDto)
+        {
+            var existingPaymentItem = _db.PaymentItems.FirstOrDefault(p => p.Id == id);
+            if (existingPaymentItem is null)
+                return NoContent();
+            _db.PaymentItems.Update(existingPaymentItem);
+            existingPaymentItem.LastUpdated = DateTime.UtcNow;
+            try
+            {
+                _db.SaveChanges();
+            }
+            catch (ArgumentNullException ex)
+            {
+                return BadRequest(new { Message = "One or more required arguments are missing", Error = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { Message = "An unexpected error occurred", Error = ex.Message });
+            }
+            return NoContent();
+        }
     }
 }
