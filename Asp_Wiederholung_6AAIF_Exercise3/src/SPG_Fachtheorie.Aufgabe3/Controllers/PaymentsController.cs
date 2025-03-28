@@ -124,18 +124,27 @@ namespace SPG_Fachtheorie.Aufgabe3.Controllers
             return NoContent();
         }
 
-        [HttpPost("{id}")]
+        [HttpPut("/api/paymentItems/{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public IActionResult UpdatePaymentItem(int id, [FromForm] PaymentItemDto paymentItemDto)
+        public IActionResult UpdatePaymentItem(int id, UpdatePaymentItemCommand cmd)
         {
-            var existingPaymentItem = _db.PaymentItems.FirstOrDefault(p => p.Id == id);
-            if (existingPaymentItem is null)
-                return NoContent();
-            _db.PaymentItems.Update(existingPaymentItem);
-            existingPaymentItem.LastUpdated = DateTime.UtcNow;
+            if (id != cmd.Id)
+                return Problem("Invalid payment item ID", statusCode: 400);
+            var paymentItem = _db.PaymentItems.FirstOrDefault(p => p.Id == id);
+            if (paymentItem is null)
+                return Problem("Payment Item not found", statusCode: 404);
+            var payment = _db.Payments.FirstOrDefault(p => p.Id == id);
+            if (payment is null)
+                return Problem("Payment not found", statusCode: 400);
+            if (paymentItem.LastUpdated != cmd.LastUpdated)
+                return Problem("Payment Item has changed", statusCode: 400);
+            paymentItem.ArticleName = cmd.ArticleName;
+            paymentItem.Amount = cmd.Amount;
+            paymentItem.Price = cmd.Price;
+            paymentItem.LastUpdated = DateTime.UtcNow;
             try
             {
                 _db.SaveChanges();
@@ -144,11 +153,40 @@ namespace SPG_Fachtheorie.Aufgabe3.Controllers
             {
                 return BadRequest(new { Message = "One or more required arguments are missing", Error = ex.Message });
             }
-            catch (Exception ex)
+            catch (DbUpdateException e)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, new { Message = "An unexpected error occurred", Error = ex.Message });
+                return Problem(e.InnerException?.Message ?? e.Message);
             }
             return NoContent();
+        }
+
+        [HttpPatch("{id}")]
+        public IActionResult UpdateConfirmed (int id)
+        {
+            var payment = _db.Payments.FirstOrDefault(p => p.Id == id);
+            if (payment is null)
+                return Problem("Payment not Found", statusCode: 404);
+            if (payment.Confirmed is not null)
+                return Problem("Payment already confirmed", statusCode: 400);
+            payment.Confirmed = payment.Confirmed;
+            return SaveorThrow();
+            return NoContent();
+        }
+
+        private IActionResult SaveorThrow()
+        {
+            try
+            {
+                _db.SaveChanges();
+            }
+            catch (ArgumentNullException ex)
+            {
+                return BadRequest(new { Message = "One or more required arguments are missing", Error = ex.Message });
+            }
+            catch (DbUpdateException e)
+            {
+                return Problem(e.InnerException?.Message ?? e.Message);
+            }
         }
     }
 }

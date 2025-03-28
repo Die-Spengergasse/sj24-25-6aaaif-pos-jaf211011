@@ -4,17 +4,17 @@ using System.ComponentModel.DataAnnotations;
 namespace SPG_Fachtheorie.Aufgabe3.Commands
 {
     public record UpdatePaymentItemCommand(
-    [Range(1, 999999, ErrorMessage = "Invalid ID")]
-    int id,
+    [Range(1, int.MaxValue, ErrorMessage = "Invalid ID")]
+    int Id,
     [StringLength(255, MinimumLength = 1, ErrorMessage = "Invalid Article Name")]
-    string articleName,
+    string ArticleName,
     [Range(1, 999999, ErrorMessage = "Invalid Amount")]
-    int amount,
-    [Range(1, 999999, ErrorMessage = "Invalid Price")]
-    decimal price,
+    int Amount,
+    [Range(1, 1_000_000, ErrorMessage = "Invalid Price")]
+    decimal Price,
     [Range(1, 999999, ErrorMessage = "Invalid Payment ID")]
-    Payment payment,
-    DateTime LastUpdated
+    Payment Payment,
+    DateTime? LastUpdated
         ) : IValidatableObject
 
     {
@@ -22,7 +22,7 @@ namespace SPG_Fachtheorie.Aufgabe3.Commands
         // Validate: Method called to validate the object
         // ValidationContext: Provides context about the object being validated
         {
-            if (LastUpdated > payment.PaymentDateTime)
+            if (LastUpdated > Payment.PaymentDateTime)
             {
                 yield return new ValidationResult("Date for update cannot be more than inital Payment", new[] { nameof(LastUpdated) });
             }
