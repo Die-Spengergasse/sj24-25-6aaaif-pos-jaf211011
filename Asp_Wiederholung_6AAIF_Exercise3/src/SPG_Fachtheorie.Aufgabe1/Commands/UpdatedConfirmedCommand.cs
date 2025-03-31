@@ -1,6 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
-namespace SPG_Fachtheorie.Aufgabe3.Commands
+namespace SPG_Fachtheorie.Aufgabe1.Commands
 {
     public record UpdatedConfirmedCommand
     (
@@ -26,6 +28,11 @@ namespace SPG_Fachtheorie.Aufgabe3.Commands
             {
                 yield return new ValidationResult("Date for update cannot be more than inital Payment", new[] { nameof(Confirmed) });
             }
+        }
+
+        IEnumerable<ValidationResult> IValidatableObject.Validate(ValidationContext validationContext)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
