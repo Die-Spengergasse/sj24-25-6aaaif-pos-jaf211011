@@ -38,6 +38,8 @@ namespace SPG_Fachtheorie.Aufgabe1.Infrastructure
                     return new Cashier(
                         registrationNumber++,
                         f.Name.FirstName(), f.Name.LastName(),
+                        f.Date.BetweenDateOnly(new DateOnly(1950, 1, 1), new DateOnly(2010, 1, 1)), 
+                        f.Random.Decimal(1500, 2700),
                         new Address(
                             f.Address.StreetName(), f.Random.Int(1000, 9999).ToString(), f.Address.City()),
                         f.Lorem.Sentence(2))
@@ -56,6 +58,8 @@ namespace SPG_Fachtheorie.Aufgabe1.Infrastructure
                     return new Manager(
                         registrationNumber++,
                         f.Name.FirstName(), f.Name.LastName(),
+                        f.Date.BetweenDateOnly(new DateOnly(1950, 1, 1), new DateOnly(2010, 1, 1)),
+                        f.Random.Decimal(1500, 2700),
                         new Address(
                             f.Address.StreetName(), f.Random.Int(1000, 9999).ToString(), f.Address.City()),
                         f.Commerce.ProductAdjective())

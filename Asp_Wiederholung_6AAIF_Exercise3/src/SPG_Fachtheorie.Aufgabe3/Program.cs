@@ -1,8 +1,12 @@
 using Microsoft.EntityFrameworkCore;
 using SPG_Fachtheorie.Aufgabe1.Infrastructure;
+using SPG_Fachtheorie.Aufgabe1.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Einfügen der Service Scopes (Keine Ahnung, ob das richtig ist)
+builder.Services.AddScoped<EmployeeService>();
+builder.Services.AddScoped<PaymentService>();
 // Suche im Programmcode nach allen Klassen mit [ApiController]
 builder.Services.AddControllers();
 // SERVICE PROVIDER
