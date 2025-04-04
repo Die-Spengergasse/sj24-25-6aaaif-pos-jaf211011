@@ -98,8 +98,6 @@ namespace SPG_Fachtheorie.Aufgabe1.Services
             manager.Address = new Address(cmd.Street, cmd.Zip, cmd.City);
             SaveOrThrow();
         }
-
-
         private void SaveOrThrow()
         {
             try
